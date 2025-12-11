@@ -1,0 +1,39 @@
+<style>
+    body {
+        background-color: #0d1117;
+        color: #58a6ff; /* GitHub 藍/綠風格 */
+        font-family: 'Courier New', Courier, monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .terminal {
+        border: 2px solid #30363d;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+        max-width: 400px;
+        width: 100%;
+    }
+    .line { margin: 10px 0; }
+    .prompt { color: #7ee787; margin-right: 10px; }
+    .cursor {
+        display: inline-block;
+        width: 10px;
+        height: 1.2em;
+        background-color: #58a6ff;
+        animation: blink 1s infinite;
+        vertical-align: middle;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+</style>
+
+<div class="terminal">
+    <div class="line"><span class="prompt">user@home:~$</span> ./show-info.sh</div>
+    <div class="line">Name: <strong>你的名字</strong></div>
+    <div class="line">Status: <strong>Procrastinating 🤡</strong></div>
+    <div class="line">Skills: [HTML, CSS, "Sleep"]</div>
+    <div class="line"><span class="prompt">user@home:~$</span> <span class="cursor"></span></div>
+</div>
