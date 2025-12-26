@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>狀態表化簡程式實作 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="一些前言對應高職資電類專二——數位邏輯設計的8-4章節（但補充）此筆記主要是在記錄分組法狀態表化簡的程式實作過程紀錄，本次程式使用c++撰寫，並且內容含有大量個人書寫怪癖（意即不嘻嘻的coding style，之後優化會修TT）orz。 是個挺適合放上學習歷程的小專題！整體而言，我只花了一天多的時間完成專題報告＆程式撰寫。 不過我記得網路上搜尋的到的資料非常少（沒試過英文搜尋），所以這個程式 10">
+<meta property="og:type" content="article">
+<meta property="og:title" content="狀態表化簡程式實作">
+<meta property="og:url" content="http://example.com/2025/07/09/%E7%8B%80%E6%85%8B%E8%A1%A8%E5%8C%96%E7%B0%A1%E7%A8%8B%E5%BC%8F%E5%AF%A6%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一些前言對應高職資電類專二——數位邏輯設計的8-4章節（但補充）此筆記主要是在記錄分組法狀態表化簡的程式實作過程紀錄，本次程式使用c++撰寫，並且內容含有大量個人書寫怪癖（意即不嘻嘻的coding style，之後優化會修TT）orz。 是個挺適合放上學習歷程的小專題！整體而言，我只花了一天多的時間完成專題報告＆程式撰寫。 不過我記得網路上搜尋的到的資料非常少（沒試過英文搜尋），所以這個程式 10">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyYxa6EBge.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rykK3PLrll.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1-2nP8Hgl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJNi9yBrgg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1Es9JHrex.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkDV3vLBgl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1tLRYQrge.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJ1GA_Ireg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJoXLC4reg.png">
+<meta property="article:published_time" content="2025-07-09T06:55:16.000Z">
+<meta property="article:modified_time" content="2025-12-26T16:50:17.378Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="數位邏輯">
+<meta property="article:tag" content="程式專案">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HyYxa6EBge.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/IMG_8664.WEBP">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="https://pbs.twimg.com/media/Go1hwXZacAA6sPx?format=jpg&name=large" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Hexo </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Posts</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS Feed">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/IMG_8664.WEBP></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">zyzy </div>
+      <div class="dot"></div>
+      <div class="subtitle">醉羽的打滾小天地:D </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://discord.com/users/806458038348677130" title="Discord"><i class="fa-brands fa-discord"></i></a>
+        
+          <a class="link-btn" href="mailto:user@zuiyu.me" title="Gmail"><i class="fa-regular fa-envelope"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/zyzy0826" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%95%B8%E4%BD%8D%E9%82%8F%E8%BC%AF/" rel="tag">數位邏輯</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E7%A8%8B%E5%BC%8F%E5%B0%88%E6%A1%88/" rel="tag">程式專案</a></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="archives-狀態表化簡程式實作" class="h-entry article article-type-archives" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        狀態表化簡程式實作
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2025-07-09T06:55:16.000Z" itemprop="datePublished">2025-07-09</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+    Uncategorized 
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            12k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B8%E4%BD%8D%E9%82%8F%E8%BC%AF/" rel="tag">數位邏輯</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%A8%8B%E5%BC%8F%E5%B0%88%E6%A1%88/" rel="tag">程式專案</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h1 id="一些前言"><a href="#一些前言" class="headerlink" title="一些前言"></a>一些前言</h1><p>對應高職資電類專二——數位邏輯設計的8-4章節（但補充）<br>此筆記主要是在記錄<strong>分組法狀態表化簡</strong>的程式實作過程紀錄，本次程式使用c++撰寫，並且內容含有大量個人書寫怪癖（意即不嘻嘻的coding style，之後優化會修TT）orz。</p>
+<p>是個挺適合放上學習歷程的小專題！<br>整體而言，我只花了一天多的時間完成專題報告＆程式撰寫。</p>
+<p>不過我記得網路上搜尋的到的資料非常少（沒試過英文搜尋），所以這個程式 100% 是我自己寫的，如果有bug的話可以跟我說一下:D<br>然後優化有點爆掉了我很抱歉，<del>請鞭小力點</del>;-;</p>
+<h1 id="題目說明"><a href="#題目說明" class="headerlink" title="題目說明"></a>題目說明</h1><p>利用分組法刪除等價項目，化簡狀態表↓</p>
+<ol>
+<li>根據 input 的輸出狀態分組 </li>
+<li>根據同 group 的各狀態之次態是否在同組<br> →同組：留著 &#x2F; 不同：拆組（次態在同組者分到同⼀組） </li>
+<li>重複動作2直到無法再分組 </li>
+<li>合併，狀態表只留下各組排頭，同組者由排頭替代</li>
+</ol>
+<h2 id="程式主架構"><a href="#程式主架構" class="headerlink" title="程式主架構"></a>程式主架構</h2><p><img src="https://hackmd.io/_uploads/HyYxa6EBge.png" alt="螢幕擷取畫面 2025-07-04 113906"></p>
+<h2 id="程式介面"><a href="#程式介面" class="headerlink" title="程式介面"></a>程式介面</h2><ol>
+<li>米利機<br> <img src="https://hackmd.io/_uploads/rykK3PLrll.png" alt="image"></li>
+<li>莫爾機<br> <img src="https://hackmd.io/_uploads/H1-2nP8Hgl.png" alt="image"></li>
+</ol>
+<h1 id="你需要有的先備知識1——高職（應該）有教你的狀態圖＆狀態表"><a href="#你需要有的先備知識1——高職（應該）有教你的狀態圖＆狀態表" class="headerlink" title="你需要有的先備知識1——高職（應該）有教你的狀態圖＆狀態表"></a>你需要有的先備知識1——高職（應該）有教你的狀態圖＆狀態表</h1><p>以防萬一學校沒有多講，我帶著講義過來了（指路：科友的數位邏輯設計參考書2023版本）</p>
+<p>循序邏輯是利用狀態來設計的，其中循序邏輯電路可以分成 ↓</p>
+<ol>
+<li>不具輸入也不具輸出——依靠正反器輸出判斷，舉例就是T型正反器輸入接上一級輸出的那種電路。</li>
+<li>具有輸入但不具輸出——莫爾機。</li>
+<li>具有輸入也具有輸出——米利機。</li>
+</ol>
+<p>然後我用了canva畫了有點陽春的示意圖，其中輸出跟次態的括號裡為輸入值。<br><img src="https://hackmd.io/_uploads/rJNi9yBrgg.png" alt="Data"><br><img src="https://hackmd.io/_uploads/H1Es9JHrex.png" alt="Data (1)"><br>看到這個應該就明白我在說什麼了吧？</p>
+<blockquote>
+<p>了解之後我們就直接來講簡化！</p>
+</blockquote>
+<p>米利機跟莫爾機的分組法化簡基本上是一樣的（但是這兩個不等價！！）<br>所以後面我以米利機為主.w.</p>
+<p>化簡目的 → 刪除冗餘的狀態，減少正反器的需求量:D<br>可被化簡 ↓</p>
+<ol>
+<li>相等——兩個狀態在輸入相同變數後，會有相同的次態（＆輸出）</li>
+<li>等效——兩個狀態在輸入相同變數後，其一次態相同，而另一個次態是彼此（＆相同輸出）</li>
+</ol>
+<p>符合上述條件的兩狀態可以化簡成一個狀態。</p>
+<h2 id="你必須會的化簡法——直接觀察法"><a href="#你必須會的化簡法——直接觀察法" class="headerlink" title="你必須會的化簡法——直接觀察法"></a>你必須會的化簡法——直接觀察法</h2><p>舉個<del>栗子</del>（米利機，指路台科大圖書的數位邏輯設計2025第二版）：</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td>F</td>
+<td>D</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>F</td>
+<td>D</td>
+<td>B</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>↑ 先觀察比較直觀的輸出，輸出一樣的再一起比較，然後我們可以分成：<br>輸出為 0&#x2F;0 的：C、E。<br>輸出為 0&#x2F;1 的：B、F。<br>輸出為 1&#x2F;0 的：A、D。</p>
+<p>然後來看 0&#x2F;0 這一組，發現CE沒有相等或等效，所以跳過他們，等後面消除其他狀態之後再來看。<br>看 0&#x2F;1 這一組，發現BF也沒辦法消去，所以跳過。<br>看 1&#x2F;0 這一組，發現AD是相等，所以我們可以把其一化簡掉，這裡拿D化簡，然後再更新一下我們的狀態表（刪除D並且以A代替D）。</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><del>D</del></td>
+<td><del>B</del></td>
+<td><del>C</del></td>
+<td><del>1</del></td>
+<td><del>0</del></td>
+</tr>
+<tr>
+<td>E</td>
+<td>F</td>
+<td><del>D</del> A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>F</td>
+<td><del>D</del> A</td>
+<td>B</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>雖然不明顯但是D被劃掉了</p>
+</blockquote>
+<p>↓</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td>F</td>
+<td><mark>A</mark></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>F</td>
+<td><mark>A</mark></td>
+<td>B</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>再重複剛剛的檢查方式，發現BF等效，所以刪除F並以B代替F，得到：</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+<td><mark>B</mark></td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td><mark>B</mark></td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>這時候我們又發現，CE相等！最後得到：</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>B</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>再來我們來點進階的</p>
+<h2 id="老師可能也沒說的化簡法——分組法"><a href="#老師可能也沒說的化簡法——分組法" class="headerlink" title="老師可能也沒說的化簡法——分組法"></a>老師可能也沒說的化簡法——分組法</h2><p>是這樣的，因為我聽過兩種分組法但大同小異，所以這裡只說我拿來實現程式化的分組法.w.</p>
+<p>一樣的例題：</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td>F</td>
+<td>D</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>F</td>
+<td>D</td>
+<td>B</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>首先我們一樣把輸出一樣的分在同一組。<br>輸出為 0&#x2F;0 的：C、E。<br>輸出為 0&#x2F;1 的：B、F。<br>輸出為 1&#x2F;0 的：A、D。</p>
+<table>
+<thead>
+<tr>
+<th>組別 1</th>
+<th>組別 2</th>
+<th>組別 3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CE</td>
+<td>BF</td>
+<td>AD</td>
+</tr>
+</tbody></table>
+<p>對比一下第一組，C的次態(0&#x2F;1)為B跟A，而E的次態(0&#x2F;1)為F跟D。<br>發現BF都在組別 2，然後AD都在組別 3，<mark>所以組別 1 不需要再拆分開來了</mark>。</p>
+<p>檢查剩下兩個組別會發現，都已經不需要再拆分了，所以我們可以直接化簡到剩下 3 個狀態（組別數量，各組只留一個狀態），可以得到：</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>B</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>這例子有點太快了，所以我們再來一題:D<br>（指路：這是我老師講義的例題，所以我不確定是哪裡出的了。）</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>C</td>
+<td>F</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>E</td>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>C</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td>C</td>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>E</td>
+<td>D</td>
+<td>E</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>F</td>
+<td>A</td>
+<td>E</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>然後依照輸出分組 ↓</p>
+<table>
+<thead>
+<tr>
+<th>組別 1</th>
+<th>組別 2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ACEF</td>
+<td>BD</td>
+</tr>
+</tbody></table>
+<p>來看組別 1 ，<br>A的次態組別分別屬於組別 1 跟組別 1，<br>C的次態組別分別屬於組別 2 跟組別 1，<br>E的次態組別分別屬於組別 2 跟組別 1，<br>F的次態組別分別屬於組別 1 跟組別 1。</p>
+<p>組別 2 ，<br>B的次態組別分別屬於組別 1 跟組別 1，<br>D的次態組別分別屬於組別 1 跟組別 1。</p>
+<p>發現組別 1 的次態並沒有都在同一組，所以仍須被拆分！而拆分的方法則是次態在一組的拆分到同一組去（當然輸出還是要相同，所以直接在原組別內拆分即可）：</p>
+<table>
+<thead>
+<tr>
+<th>組別 1</th>
+<th>組別 2</th>
+<th>組別 3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AF</td>
+<td>CE</td>
+<td>BD</td>
+</tr>
+</tbody></table>
+<p>第二次檢查，來看組別 1 ，<br>A的次態組別分別屬於組別 2 跟組別 1，<br>F的次態組別分別屬於組別 1 跟組別 2。</p>
+<p>組別 2 ，<br>C的次態組別分別屬於組別 3 跟組別 2，<br>E的次態組別分別屬於組別 3 跟組別 2。</p>
+<p>組別 3 ，<br>B的次態組別分別屬於組別 2 跟組別 1，<br>D的次態組別分別屬於組別 2 跟組別 1。</p>
+<p>然後發現組別 1 仍需被拆分：</p>
+<table>
+<thead>
+<tr>
+<th>組別 1</th>
+<th>組別 2</th>
+<th>組別 3</th>
+<th>組別 4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>F</td>
+<td>CE</td>
+<td>BD</td>
+</tr>
+</tbody></table>
+<p>第三次檢查，來看組別 1 ，<br>A的次態組別分別屬於組別 3 跟組別 2，</p>
+<p>組別 2 ，<br>F的次態組別分別屬於組別 1 跟組別 3，</p>
+<p>組別 3 ，<br>C的次態組別分別屬於組別 4 跟組別 3，<br>E的次態組別分別屬於組別 4 跟組別 3。</p>
+<p>組別 4 ，<br>B的次態組別分別屬於組別 3 跟組別 2，<br>D的次態組別分別屬於組別 3 跟組別 2。</p>
+<p>！！化簡完成，不必再繼續拆分，所以可以得到：</p>
+<table>
+<thead>
+<tr>
+<th>狀態名稱</th>
+<th>次態(0)</th>
+<th>次態(1)</th>
+<th>輸出(0)</th>
+<th>輸出(1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>C</td>
+<td>F</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>F</td>
+<td>A</td>
+<td>C</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td>B</td>
+<td>C</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>C</td>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>我的程式運行結果：<br><img src="https://hackmd.io/_uploads/HkDV3vLBgl.png" alt="image"></p>
+<blockquote>
+<p>題外話，我後來翻了維基百科，分組法大概就是這個了 ↓</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/r1tLRYQrge.png" alt="螢幕擷取畫面 2025-07-03 125825"><br>我笨，看不懂:D</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E7%A1%AE%E5%AE%9A%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA%E6%9C%80%E5%B0%8F%E5%8C%96">維基百科——確定有限狀態自動機最小化</a></p>
+</blockquote>
+<h1 id="你需要有的先備知識2——高職（應該）沒教你的c"><a href="#你需要有的先備知識2——高職（應該）沒教你的c" class="headerlink" title="你需要有的先備知識2——高職（應該）沒教你的c++"></a>你需要有的先備知識2——高職（應該）沒教你的c++</h1><p>不用以防萬一了，因為這應該真沒學過了吧？</p>
+<p>！預設你的程式已經有 struct 跟 class 的基礎了！<br>所以接下來你只要再學會這些就可以啦:D ↓</p>
+<ol>
+<li>vector</li>
+<li>map</li>
+<li>reference</li>
+<li>for(變數型態 變數名稱 : 陣列)</li>
+</ol>
+<p>會的人可以直接跳到程式實作區域了！</p>
+<h2 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h2><p>動態陣列，這裡不深講理論，請想像成很好用的陣列&gt;w</p>
+<p>動態陣列的大小是會隨著元素的多寡增加的，所以在新增元素的時候我們不能直接使用我們一般熟悉的 array[i] 輸入，而是要使用 array.push_back(元素)。<br>當然如果一開始直接使用 resize 的話是可以直接 array[i] 存取。</p>
+<p>宣告方式為：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;變數型態&gt; array;</span><br></pre></td></tr></table></figure>
+<p>二維陣列宣告則是將一維陣列當成變數型態：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;變數型態&gt;&gt; array;</span><br></pre></td></tr></table></figure>
+<p>對二維陣列不熟悉的話，可以試著用上面的方法記！<br>對於像我這種空間感極差的人來說，會比較直觀一點，在學指標取陣列值的時候也會比較簡單。</p>
+<p>然後我只會用到上面的知識點所以，<a target="_blank" rel="noopener" href="https://shengyu7697.github.io/std-vector/#google_vignette">想再深入探討的可以看看這裡</a>。</p>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p><del>map 我是無師自通的</del>，所以原理我懂的不多，一樣不說太多。<br>map 直接翻譯就是地圖，那麼我們就用地圖的概念來舉例。<br>想像今天你在 google map 上輸入經緯度，那麼搜尋結果不就會出現你想要尋找的地點嗎？在這裡我們就可以把經緯度當成 key 值，而搜尋結果就是他的 value 值。</p>
+<p>像這樣 ↓</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map[&#123;25°02&#x27;02.4&quot;N, 121°33&#x27;52.9&quot;E&#125;] = &quot;台北101&quot;;</span><br><span class="line">map[key] = value;</span><br></pre></td></tr></table></figure>
+<p>當然，map[{key1, key2}] 的寫法請搭配 pair 使用 :P</p>
+<p>宣告方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map&lt;變數型態(key), 變數型態(value)&gt; mp;</span><br></pre></td></tr></table></figure>
+
+<p>然後我後面有用到一個感覺很不健康的寫法（直覺告訴我的）↓<br><img src="https://hackmd.io/_uploads/rJ1GA_Ireg.png" alt="螢幕擷取畫面 2025-07-05 161300"><br>雖然會動，但直接對未宣告的 map 取值，有種對空指標取值的罪惡感orz</p>
+<p>* 更：這是我家 chatgpt 說的↓</p>
+<table>
+<thead>
+<tr>
+<th>寫法</th>
+<th>安全性</th>
+<th>是否會插入新元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>map[key]</code></td>
+<td>🚨 有風險</td>
+<td>✅ 會插入</td>
+</tr>
+<tr>
+<td><code>map.count(key)</code></td>
+<td>✅ 安全</td>
+<td>❌ 不插入</td>
+</tr>
+<tr>
+<td><code>map.find(key)</code></td>
+<td>✅ 安全</td>
+<td>❌ 不插入</td>
+</tr>
+</tbody></table>
+<p>！請記得不要模仿我的寫法！</p>
+<p>一樣，<a target="_blank" rel="noopener" href="https://shengyu7697.github.io/std-map/">想要深入了解的可以看這裡</a>。</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p>參照很好用，學了參照之後就可以代替部分 function 使用指標的地方。<br>簡單的想法就是想成幫變數取一個綽號，而宣告方式是這樣：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">變數型態 a;</span><br><span class="line">變數型態 &amp;b = a;</span><br></pre></td></tr></table></figure>
+<p>之後的程式裡面，a跟b就是等價的了。<br>只要去更動到 b，那麼 a 也會跟著改變，使用 b 的時候可以不用像指標一樣前面加 ‘*‘，直接寫 b 即可。</p>
+<h2 id="for-變數型態-變數名稱-陣列"><a href="#for-變數型態-變數名稱-陣列" class="headerlink" title="for(變數型態 變數名稱 : 陣列)"></a>for(變數型態 變數名稱 : 陣列)</h2><p>這個也很好玩，可以在學校拿來嚇同學。<br>迴圈的描述意思是指，取出陣列裡的所有元素。</p>
+<p>舉例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> array[<span class="number">3</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> a : array)</span><br><span class="line">    cout &lt;&lt; a &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>然後就會輸出0 1 2 了！<br>是不是很方便呢:D</p>
+<p>基本上只要不需要知道陣列裡的索引值，就可以使用了。</p>
+<blockquote>
+<p>然後搭配上參照！</p>
+</blockquote>
+<p>因為對輸出來說沒有影響，所以這裡用輸入舉例。<br>寫法會變成這樣：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> array[<span class="number">3</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> &amp;a : array)</span><br><span class="line">    cin &gt;&gt; a;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> a : array)</span><br><span class="line">    cout &lt;&lt; a &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果不使用 &amp;a 的宣告方式的話，那麼就會無法輸入。</p>
+<p><del>相信這樣講完應該是懂了吧。</del></p>
+<h1 id="程式實作解說"><a href="#程式實作解說" class="headerlink" title="程式實作解說"></a>程式實作解說</h1><p><a target="_blank" rel="noopener" href="https://github.com/zyzy0826/states_ex/blob/main/state_table_simplification.cpp">完整程式碼（Github）</a><br>後面也有完整的程式。</p>
+<h2 id="宣告"><a href="#宣告" class="headerlink" title="宣告"></a>宣告</h2><blockquote>
+<p>狀態物件</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">state</span>&#123;</span><br><span class="line">    string name;</span><br><span class="line">    string next_state0, next_state1;</span><br><span class="line">    <span class="type">int</span> next_number[<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> output[<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> group_id = <span class="number">-1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>狀態：名字、兩個次態的名字、次態編號、輸出、組別編號。<br>（<del>次態編號其實可以被優化刪減掉</del>）</p>
+<blockquote>
+<p>全域變數</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">map&lt;string, <span class="type">int</span>&gt; state_id; <span class="comment">// 紀錄狀態編號</span></span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; groups_id; <span class="comment">// 紀錄輸出對應的組別</span></span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; groups; <span class="comment">// 全部的組別</span></span><br></pre></td></tr></table></figure>
+<p>state_id：⽤ map 紀錄狀態的編號（放入陣列後的編號），key 值為狀態的名字。<br>group_id：⽤ map 紀錄狀態組別的編號（在⼆維陣列中的編號），key 值則是輸出狀態。<br>groups：所有的組別，其中 group[i] &#x3D; ⼀個組別，group[i][j] &#x3D; 狀態編號。</p>
+<h2 id="1-處理輸入"><a href="#1-處理輸入" class="headerlink" title="1.處理輸入"></a>1.處理輸入</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 1. 處理輸入 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立狀態表</span></span><br><span class="line"></span><br><span class="line">vector&lt;state&gt; states;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;(Moore機第二個輸出寫\&#x27;0\&#x27;)\n&quot;</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;請輸入(空格區分)\n&quot;</span> &lt;&lt; <span class="string">&quot;狀態名稱  輸出(0/1)  次態(0/1)\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; state_num; i++)&#123;</span><br><span class="line">    state present_state;</span><br><span class="line">    states.<span class="built_in">push_back</span>(present_state);</span><br><span class="line"></span><br><span class="line">    cin &gt;&gt; states[i].name &gt;&gt; states[i].output[<span class="number">0</span>] &gt;&gt; states[i].output[<span class="number">1</span>]</span><br><span class="line">        &gt;&gt; states[i].next_state0 &gt;&gt; states[i].next_state1;</span><br><span class="line">    state_id[states[i].name] = i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 記錄次態編號</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(state &amp;present_state : states)&#123;</span><br><span class="line">    present_state.next_number[<span class="number">0</span>] = state_id[present_state.next_state0];</span><br><span class="line">    present_state.next_number[<span class="number">1</span>] = state_id[present_state.next_state1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸入狀態資訊，並且紀錄起自己的編號。<br>第二次的迴圈會更新紀錄狀態的次態編號。</p>
+<p>* 動態陣列的大小會隨著元素（elements）量增加，所以在輸入的時候不能用一般陣列 cin &gt;&gt; array[i] 的寫法，必須先 push_back 元素，才可以進行存取。</p>
+<p>也可以先 states.resize(state_num) 後直接使用（不用 push_back）。<br>後面有直接使用 resize 的作法（在第二步驟）。</p>
+<h2 id="2-分組"><a href="#2-分組" class="headerlink" title="2.分組"></a>2.分組</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 2. 分組 */</span></span><br><span class="line"></span><br><span class="line">groups.<span class="built_in">resize</span>(state_num);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一次分組依靠輸出狀態來分</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> group_num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(state &amp;present_state : states)&#123;</span><br><span class="line">    string st_out;</span><br><span class="line">    st_out += present_state.output[<span class="number">0</span>] + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    st_out += present_state.output[<span class="number">1</span>] + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> index = groups_id[st_out];</span><br><span class="line">    <span class="type">int</span> stid = state_id[present_state.name];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(index == <span class="number">0</span>)&#123;</span><br><span class="line">        groups[group_num++].<span class="built_in">push_back</span>(stid);</span><br><span class="line">        groups_id[st_out] = group_num;</span><br><span class="line">        present_state.group_id = group_num;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        groups[index - <span class="number">1</span>].<span class="built_in">push_back</span>(stid);</span><br><span class="line">        present_state.group_id = index;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一開始先重新設置了動態陣列的大小，為了後面方便存取。<br>其中一開始的大小先設定成狀態總數，因為最壞的情況為無法化簡。<br>紀錄輸出組別的是 groups_id （map），其中我利用 st_out 的字串來記錄該狀態的輸出值。</p>
+<p>map 存取到的預設值為0，所以我在記錄狀態組別的時候，故意讓索引值+1，以方便記錄這個 key 值是否已存取過了。但如果之後要從 groups （二維vector）存取組別的時候，索引值需要再 -1。<br>除了利用 +1的索引值方式以外，也可以使用函式 groups_id.count(st_out) 紀錄我的 map 是否已經存取過該值了（同時也可以避免混亂）。</p>
+<h2 id="3-循環"><a href="#3-循環" class="headerlink" title="3.循環"></a>3.循環</h2><p>這裡先上循環程式主架構 ↓<br><img src="https://hackmd.io/_uploads/HJoXLC4reg.png" alt="image"><br>每一次的迴圈都會重新分一次組別，直到化簡至最簡。</p>
+<blockquote>
+<p>宣告</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; new_group;</span><br><span class="line">new_group.<span class="built_in">resize</span>(state_num);</span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; new_gpid;</span><br><span class="line"><span class="type">int</span> new_gpnum = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>↑ <strong>需要用到的變數</strong>，用來更新之後的組別狀態。因為分組的過程中，需要進行判別的是次態的所屬組別，如果一邊跑迴圈一邊更新資料狀態（組別）的話，會導致判斷錯誤。</p>
+<blockquote>
+<p>循環裡的分組</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; group_num; i++)&#123; <span class="comment">// 對每個組別取各元素</span></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; &amp;group = groups[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> &amp;s : group)&#123; <span class="comment">// 取出陣列中的元素(各組的成員編號)</span></span><br><span class="line">        state &amp;st = states[s];</span><br><span class="line">        string st_out;</span><br><span class="line">        <span class="type">int</span> ne0 = state_id[ st.next_state0 ];</span><br><span class="line">        <span class="type">int</span> ne1 = state_id[ st.next_state1 ];</span><br><span class="line">        st_out += i + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        st_out += states[ne0].group_id + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        st_out += states[ne1].group_id + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> index = new_gpid[st_out];</span><br><span class="line">        <span class="type">int</span> stid = state_id[st.name];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(index == <span class="number">0</span>)&#123;</span><br><span class="line">            new_group[new_gpnum++].<span class="built_in">push_back</span>(stid);</span><br><span class="line">            new_gpid[st_out] = new_gpnum;</span><br><span class="line">            <span class="comment">// st.group_id = new_gpnum;</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            new_group[index - <span class="number">1</span>].<span class="built_in">push_back</span>(stid);</span><br><span class="line">            <span class="comment">// st.group_id = index;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>↑ <strong>進行分組的迴圈</strong>。<br><strong>外迴圈</strong>：存取所有的組別，這裡不直接使用 for ( auto &amp;group : groups) 的原因為在內迴圈中程式需要紀錄原本狀態所屬的組別，這樣才不會和其他組的成員編列入同一組中。</p>
+<p><strong>內迴圈</strong>：存取組內所有成員，並且再判斷成員之間是否可以再拆分出其他組別。其中，這裡的 st_out 在最一開始的時候，先 + i + ‘0’（+’0’只是換成數字的ASCII）[^1]，這樣的用法是避免後面分組的時候，與非團內成員分到同一組。<br>變數 ne0 和 ne1 為次態的編號（這裡可以直接使用 state.next_number[i]）。<br>後面分組的方式和第一次雷同。</p>
+<p><strong>更新一下</strong>：+ i + ‘0’ 那裡，如果 i &gt;&#x3D; 10 的話就無法達到轉換數字 ASCII 的效果，不過仍然可以達到區分字串的效果。書寫的時候沒發現很抱歉 ;-;</p>
+<p>* 程式註解的中的 st.group_id &#x3D; …是錯誤的做法，因為提前更新狀態的組別資訊，會導致後面判斷組別時出錯。</p>
+<blockquote>
+<p>迴圈重複判斷</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 是否分完組別?</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(new_gpnum == group_num)  <span class="keyword">break</span>; <span class="comment">// 組別數不變 == 已分組至最簡</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新組別狀況</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; new_gpnum; i++)&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; &amp;group = new_group[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> s : group)&#123;</span><br><span class="line">            states[s].group_id = i<span class="number">+1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(state &amp;st : states)&#123;</span><br><span class="line">        st.next_number[<span class="number">0</span>] = new_gpid[st.next_state0];</span><br><span class="line">        st.next_number[<span class="number">1</span>] = new_gpid[st.next_state1];</span><br><span class="line">    &#125;</span><br><span class="line">    groups = new_group;</span><br><span class="line">    group_num = new_gpnum;</span><br><span class="line">    groups_id = new_gpid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>↑ <strong>判斷迴圈是否繼續執行</strong>。<br>每一次的組別數呈嚴格遞增，當組別數不再增加則代表已化簡完畢。</p>
+<p>如果化簡尚未結束，那麼會更新組別狀態，並且執行下一次的迴圈。</p>
+<h2 id="4-處理輸出"><a href="#4-處理輸出" class="headerlink" title="4.處理輸出"></a>4.處理輸出</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 處理輸出 */</span></span><br><span class="line"></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;\n化簡後: \n&quot;</span> &lt;&lt; <span class="string">&quot;狀態名稱  輸出(0/1)  次態(0/1)\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; group_num; i++)&#123;</span><br><span class="line">    <span class="type">int</span> j = groups[i][<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> next0 = state_id[states[j].next_state0];</span><br><span class="line">    <span class="type">int</span> next1 = state_id[states[j].next_state1];</span><br><span class="line"></span><br><span class="line">    string ne0 = states[ groups[ states[next0].group_id - <span class="number">1</span> ][<span class="number">0</span>] ].name;</span><br><span class="line">    string ne1 = states[ groups[ states[next1].group_id - <span class="number">1</span> ][<span class="number">0</span>] ].name;</span><br><span class="line">    cout &lt;&lt; states[j].name &lt;&lt; <span class="string">&quot;\t&quot;</span></span><br><span class="line">         &lt;&lt; states[j].output[<span class="number">0</span>] &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; states[j].output[<span class="number">1</span>] &lt;&lt; <span class="string">&quot;\t&quot;</span></span><br><span class="line">         &lt;&lt; ne0 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; ne1 &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>↑ <strong>處理輸出</strong>。<br>變數next0、next1為記錄次態編號（這裡可以使用 states[j].next_number[i]）。</p>
+<p>在這裡存取 groups 的時候，都是取各組的第一個狀態的名字進行輸出，已達到使用各組中第一個元素來取代冗贅的狀態。</p>
+<h1 id="完整程式碼展示"><a href="#完整程式碼展示" class="headerlink" title="完整程式碼展示"></a>完整程式碼展示</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Mealy</span></span><br><span class="line"><span class="comment">   Moore 的第二個輸出打0 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">state</span>&#123;</span><br><span class="line">    string name;</span><br><span class="line">    string next_state0, next_state1;</span><br><span class="line">    <span class="type">int</span> next_number[<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> output[<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> group_id = <span class="number">-1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; state_id; <span class="comment">// 紀錄狀態編號</span></span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; groups_id; <span class="comment">// 紀錄輸出對應的組別</span></span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; groups; <span class="comment">// 全部的組別</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;請輸入狀態數量 : &quot;</span>;</span><br><span class="line">    <span class="type">int</span> state_num; cin &gt;&gt; state_num;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 1. 處理輸入 */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建立狀態表</span></span><br><span class="line"></span><br><span class="line">    vector&lt;state&gt; states;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;(Moore機第二個輸出寫\&#x27;0\&#x27;)\n&quot;</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;請輸入(空格區分)\n&quot;</span> &lt;&lt; <span class="string">&quot;狀態名稱  輸出(0/1)  次態(0/1)\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; state_num; i++)&#123;</span><br><span class="line">        state present_state;</span><br><span class="line">        states.<span class="built_in">push_back</span>(present_state);</span><br><span class="line"></span><br><span class="line">        cin &gt;&gt; states[i].name &gt;&gt; states[i].output[<span class="number">0</span>] &gt;&gt; states[i].output[<span class="number">1</span>]</span><br><span class="line">            &gt;&gt; states[i].next_state0 &gt;&gt; states[i].next_state1;</span><br><span class="line">        state_id[states[i].name] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 記錄次態編號</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(state &amp;present_state : states)&#123;</span><br><span class="line">        present_state.next_number[<span class="number">0</span>] = state_id[present_state.next_state0];</span><br><span class="line">        present_state.next_number[<span class="number">1</span>] = state_id[present_state.next_state1];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 2. 分組 */</span></span><br><span class="line"></span><br><span class="line">    groups.<span class="built_in">resize</span>(state_num);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第一次分組依靠輸出狀態來分</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> group_num = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(state &amp;present_state : states)&#123;</span><br><span class="line">        string st_out;</span><br><span class="line">        st_out += present_state.output[<span class="number">0</span>] + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        st_out += present_state.output[<span class="number">1</span>] + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> index = groups_id[st_out];</span><br><span class="line">        <span class="type">int</span> stid = state_id[present_state.name];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(index == <span class="number">0</span>)&#123;</span><br><span class="line">            groups[group_num++].<span class="built_in">push_back</span>(stid);</span><br><span class="line">            groups_id[st_out] = group_num;</span><br><span class="line">            present_state.group_id = group_num;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            groups[index - <span class="number">1</span>].<span class="built_in">push_back</span>(stid);</span><br><span class="line">            present_state.group_id = index;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 3. 循環 */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; new_group;</span><br><span class="line">        new_group.<span class="built_in">resize</span>(state_num);</span><br><span class="line">        map&lt;string, <span class="type">int</span>&gt; new_gpid;</span><br><span class="line">        <span class="type">int</span> new_gpnum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; group_num; i++)&#123; <span class="comment">// 對每個組別取各元素</span></span><br><span class="line">            vector&lt;<span class="type">int</span>&gt; &amp;group = groups[i];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> &amp;s : group)&#123; <span class="comment">// 取出陣列中的元素(各組的成員編號)</span></span><br><span class="line">                state &amp;st = states[s];</span><br><span class="line">                string st_out;</span><br><span class="line">                <span class="type">int</span> ne0 = state_id[ st.next_state0 ];</span><br><span class="line">                <span class="type">int</span> ne1 = state_id[ st.next_state1 ];</span><br><span class="line">                st_out += i + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                st_out += states[ne0].group_id + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                st_out += states[ne1].group_id + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">                <span class="type">int</span> index = new_gpid[st_out];</span><br><span class="line">                <span class="type">int</span> stid = state_id[st.name];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(index == <span class="number">0</span>)&#123;</span><br><span class="line">                    new_group[new_gpnum++].<span class="built_in">push_back</span>(stid);</span><br><span class="line">                    new_gpid[st_out] = new_gpnum;</span><br><span class="line">                    <span class="comment">// st.group_id = new_gpnum;</span></span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    new_group[index - <span class="number">1</span>].<span class="built_in">push_back</span>(stid);</span><br><span class="line">                    <span class="comment">// st.group_id = index;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 是否分完組別?</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(new_gpnum == group_num)  <span class="keyword">break</span>; <span class="comment">// 組別數不變 == 已分組至最簡</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 更新組別狀況</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; new_gpnum; i++)&#123;</span><br><span class="line">            vector&lt;<span class="type">int</span>&gt; &amp;group = new_group[i];</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> s : group)&#123;</span><br><span class="line">                states[s].group_id = i<span class="number">+1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(state &amp;st : states)&#123;</span><br><span class="line">            st.next_number[<span class="number">0</span>] = new_gpid[st.next_state0];</span><br><span class="line">            st.next_number[<span class="number">1</span>] = new_gpid[st.next_state1];</span><br><span class="line">        &#125;</span><br><span class="line">        groups = new_group;</span><br><span class="line">        group_num = new_gpnum;</span><br><span class="line">        groups_id = new_gpid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 4. 處理輸出 */</span></span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;\n化簡後: \n&quot;</span> &lt;&lt; <span class="string">&quot;狀態名稱  輸出(0/1)  次態(0/1)\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; group_num; i++)&#123;</span><br><span class="line">        <span class="type">int</span> j = groups[i][<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> next0 = state_id[states[j].next_state0];</span><br><span class="line">        <span class="type">int</span> next1 = state_id[states[j].next_state1];</span><br><span class="line"></span><br><span class="line">        string ne0 = states[ groups[ states[next0].group_id - <span class="number">1</span> ][<span class="number">0</span>] ].name;</span><br><span class="line">        string ne1 = states[ groups[ states[next1].group_id - <span class="number">1</span> ][<span class="number">0</span>] ].name;</span><br><span class="line">        cout &lt;&lt; states[j].name &lt;&lt; <span class="string">&quot;\t&quot;</span></span><br><span class="line">             &lt;&lt; states[j].output[<span class="number">0</span>] &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; states[j].output[<span class="number">1</span>] &lt;&lt; <span class="string">&quot;\t&quot;</span></span><br><span class="line">             &lt;&lt; ne0 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; ne1 &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="寫給自己看的小反思"><a href="#寫給自己看的小反思" class="headerlink" title="寫給自己看的小反思"></a>寫給自己看的小反思</h1><p>在整理筆記的時候發現的缺點們，以及期待新增功能 &amp; 優化 ↓</p>
+<ol>
+<li>變數名稱超亂</li>
+<li>減少不必要的變數們</li>
+<li>介面優化</li>
+<li>減少個人奇怪的書寫怪癖</li>
+<li>原先其實預計輸出前有 sort 的功能，可以加的話是最好</li>
+<li>少用萬用標頭檔:D</li>
+<li>不要直接對沒宣告 key 值的 map 取值</li>
+</ol>
+<p>不說了，<del>能跑的程式就是好程式，優化什麼的交給未來上了資工的我吧</del>:D</p>
+<p>程式完成時間：2025 &#x2F; 01 &#x2F; 19<br>最後更新時間：2025 &#x2F; 07 &#x2F; 17</p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+
+  
+</article>
+
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2025 zyzy<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
