@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2025-12-29T15:05:36.280Z</updated>
+  <updated>2025-12-29T18:18:38.929Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>統測甄選經驗分享</title>
+    <link href="http://example.com/2025/12/28/test-prepare114/"/>
+    <id>http://example.com/2025/12/28/test-prepare114/</id>
+    <published>2025-12-28T08:55:59.000Z</published>
+    <updated>2025-12-29T18:18:38.929Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一些前言&quot;&gt;&lt;a href=&quot;#一些前言&quot; class=&quot;headerlink&quot; title=&quot;一些前言&quot;&gt;&lt;/a&gt;一些前言&lt;/h2&gt;&lt;p&gt;先從結果論，我甄選落榜了。&lt;br&gt;會撰寫此篇心得的原因是最近要返校了，所以想要先儲備一些能夠分享資訊</summary>
+        
+      
+    
+    
+    
+    <category term="心得" scheme="http://example.com/categories/%E5%BF%83%E5%BE%97/"/>
+    
+    
+    <category term="甄選" scheme="http://example.com/tags/%E7%94%84%E9%81%B8/"/>
+    
+    <category term="統測" scheme="http://example.com/tags/%E7%B5%B1%E6%B8%AC/"/>
+    
+  </entry>
   
   <entry>
     <title>交換禮物隨機抽籤網頁</title>
