@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Zuiyu&#39;s blog</title>
+  <icon>http://example.com/icon.png</icon>
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2025-12-29T15:05:36.280Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>交換禮物隨機抽籤網頁</title>
+    <link href="http://example.com/2025/12/21/xmas-exchange/"/>
+    <id>http://example.com/2025/12/21/xmas-exchange/</id>
+    <published>2025-12-21T14:27:16.000Z</published>
+    <updated>2025-12-29T15:05:36.280Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一些前言&quot;&gt;&lt;a href=&quot;#一些前言&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="tools" scheme="http://example.com/categories/tools/"/>
+    
+    
+    <category term="tools" scheme="http://example.com/tags/tools/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>狀態表化簡程式實作</title>
+    <link href="http://example.com/2025/07/09/status-simple/"/>
+    <id>http://example.com/2025/07/09/status-simple/</id>
+    <published>2025-07-09T06:55:16.000Z</published>
+    <updated>2025-12-27T03:19:22.425Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;一些前言&quot;&gt;&lt;a href=&quot;#一些前言&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="dev" scheme="http://example.com/categories/dev/"/>
+    
+    
+    <category term="C++" scheme="http://example.com/tags/C/"/>
+    
+    <category term="數位邏輯" scheme="http://example.com/tags/%E6%95%B8%E4%BD%8D%E9%82%8F%E8%BC%AF/"/>
+    
+    <category term="程式專案" scheme="http://example.com/tags/%E7%A8%8B%E5%BC%8F%E5%B0%88%E6%A1%88/"/>
+    
+  </entry>
+  
+</feed>
