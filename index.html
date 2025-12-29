@@ -147,14 +147,14 @@
     <div class="widget">
       <h3 class="widget-title">Categories</h3>
       <div class="category-box">
-            <a class="category-link" href="/categories/tools/">
-                tools
-                <div class="category-count">1</div>
-            </a>
-        
             <a class="category-link" href="/categories/dev/">
                 dev
                 <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/tools/">
+                tools
+                <div class="category-count">2</div>
             </a>
         </div>
     </div>
@@ -259,6 +259,92 @@
     <a class="right-panel  non-pic  "
       
       href="/2025/12/21/xmas-exchange/" 
+    >
+       
+      <i class="fa-solid fa-angle-right non-pic"></i>
+       
+    </a>
+     
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+   
+
+
+<article id="post-heic2jpg" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 itemprop="name">
+        <a class="p-name article-title" href="/2025/12/19/heic2jpg/">一鍵HEIC轉檔JPG</a>
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2025-12-19T15:29:04.000Z" itemprop="datePublished">2025-12-19</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/tools/">tools</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            1.8k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/" rel="tag">tools</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <div class="truncate-text">
+            
+              一些前言在通識課上擔任了攝影一職，結果用 iPhone 拍了一堆美照，傳到電腦（尤其是 Windows）上卻發現全是 .HEIC 格式，預覽跑不出來，丟進編輯軟體也不支援。🫠
+雖然網路上有很多轉檔工具，但一張一張上傳轉檔的速度實在是太慢了，不如自己用 Python 寫一個批次轉檔腳本！簡單、快速又安全 ୧꒰◌´꒳&#96;◌꒱૭
+
+環境準備記得要安裝 Python 並且有一個可以撰寫程式的環境喔！
+在開始之前，我們需要安裝兩個 Python 套件：
+
+Pillow: Python 最強大的影像處理函式庫。
+pillow-heif: 讓 Pillow 能夠讀取 HEIF&#x2F;HEIC 格式的擴充套件。
+
+安裝指令請打開你的 Terminal 或 CMD，輸入以下指令：
+1pip install Pillow pillow-heif
+
+
+完整程式碼12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import osfrom PIL import Im...
+            
+          </div>
+        
+      </div>
+
+         
+    </div>
+    
+     
+    <a class="right-panel  non-pic  "
+      
+      href="/2025/12/19/heic2jpg/" 
     >
        
       <i class="fa-solid fa-angle-right non-pic"></i>
