@@ -44,6 +44,36 @@
   </entry>
   
   <entry>
+    <title>Blog 常用語法（hexo）</title>
+    <link href="http://example.com/2025/12/26/hexo-use/"/>
+    <id>http://example.com/2025/12/26/hexo-use/</id>
+    <published>2025-12-26T09:59:46.000Z</published>
+    <updated>2026-01-29T02:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;不是前言&quot;&gt;&lt;a href=&quot;#不是前言&quot; class=&quot;headerlink&quot; title=&quot;不是前言&quot;&gt;&lt;/a&gt;不是前言&lt;/h2&gt;&lt;p&gt;應該是算是留給自己看的技術筆記，太久沒碰電腦了差點連鍵盤都不會用了orz&lt;/p&gt;
+&lt;h2 id=&quot;常用終端機指令&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="dev" scheme="http://example.com/categories/dev/"/>
+    
+    
+    <category term="Notes" scheme="http://example.com/tags/Notes/"/>
+    
+    <category term="hexo" scheme="http://example.com/tags/hexo/"/>
+    
+    <category term="terminal" scheme="http://example.com/tags/terminal/"/>
+    
+  </entry>
+  
+  <entry>
     <title>交換禮物隨機抽籤網頁</title>
     <link href="http://example.com/2025/12/21/xmas-exchange/"/>
     <id>http://example.com/2025/12/21/xmas-exchange/</id>
