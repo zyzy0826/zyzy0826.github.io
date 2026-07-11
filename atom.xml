@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Zuiyu&#39;s blog</title>
-  <icon>http://example.com/icon.png</icon>
+  <icon>https://zuiyu.me/icon.png</icon>
   
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://zuiyu.me/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://zuiyu.me/"/>
   <updated>2025-12-29T18:28:30.458Z</updated>
-  <id>http://example.com/</id>
+  <id>https://zuiyu.me/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>Zuiyu</name>
     
   </author>
   
@@ -18,8 +18,8 @@
   
   <entry>
     <title>統測甄選經驗分享</title>
-    <link href="http://example.com/2025/12/28/test-prepare114/"/>
-    <id>http://example.com/2025/12/28/test-prepare114/</id>
+    <link href="https://zuiyu.me/2025/12/28/test-prepare114/"/>
+    <id>https://zuiyu.me/2025/12/28/test-prepare114/</id>
     <published>2025-12-28T08:55:59.000Z</published>
     <updated>2025-12-29T18:28:30.458Z</updated>
     
@@ -34,19 +34,19 @@
     
     
     
-    <category term="心得" scheme="http://example.com/categories/%E5%BF%83%E5%BE%97/"/>
+    <category term="心得" scheme="https://zuiyu.me/categories/%E5%BF%83%E5%BE%97/"/>
     
     
-    <category term="甄選" scheme="http://example.com/tags/%E7%94%84%E9%81%B8/"/>
+    <category term="甄選" scheme="https://zuiyu.me/tags/%E7%94%84%E9%81%B8/"/>
     
-    <category term="統測" scheme="http://example.com/tags/%E7%B5%B1%E6%B8%AC/"/>
+    <category term="統測" scheme="https://zuiyu.me/tags/%E7%B5%B1%E6%B8%AC/"/>
     
   </entry>
   
   <entry>
     <title>Blog 常用語法（hexo）</title>
-    <link href="http://example.com/2025/12/26/hexo-use/"/>
-    <id>http://example.com/2025/12/26/hexo-use/</id>
+    <link href="https://zuiyu.me/2025/12/26/hexo-use/"/>
+    <id>https://zuiyu.me/2025/12/26/hexo-use/</id>
     <published>2025-12-26T09:59:46.000Z</published>
     <updated>2026-01-29T02:00:00.000Z</updated>
     
@@ -62,21 +62,21 @@
     
     
     
-    <category term="dev" scheme="http://example.com/categories/dev/"/>
+    <category term="dev" scheme="https://zuiyu.me/categories/dev/"/>
     
     
-    <category term="Notes" scheme="http://example.com/tags/Notes/"/>
+    <category term="Notes" scheme="https://zuiyu.me/tags/Notes/"/>
     
-    <category term="hexo" scheme="http://example.com/tags/hexo/"/>
+    <category term="hexo" scheme="https://zuiyu.me/tags/hexo/"/>
     
-    <category term="terminal" scheme="http://example.com/tags/terminal/"/>
+    <category term="terminal" scheme="https://zuiyu.me/tags/terminal/"/>
     
   </entry>
   
   <entry>
     <title>交換禮物隨機抽籤網頁</title>
-    <link href="http://example.com/2025/12/21/xmas-exchange/"/>
-    <id>http://example.com/2025/12/21/xmas-exchange/</id>
+    <link href="https://zuiyu.me/2025/12/21/xmas-exchange/"/>
+    <id>https://zuiyu.me/2025/12/21/xmas-exchange/</id>
     <published>2025-12-21T14:27:16.000Z</published>
     <updated>2025-12-29T15:05:36.280Z</updated>
     
@@ -91,17 +91,17 @@
     
     
     
-    <category term="tools" scheme="http://example.com/categories/tools/"/>
+    <category term="tools" scheme="https://zuiyu.me/categories/tools/"/>
     
     
-    <category term="tools" scheme="http://example.com/tags/tools/"/>
+    <category term="tools" scheme="https://zuiyu.me/tags/tools/"/>
     
   </entry>
   
   <entry>
     <title>一鍵HEIC轉檔JPG</title>
-    <link href="http://example.com/2025/12/19/heic2jpg/"/>
-    <id>http://example.com/2025/12/19/heic2jpg/</id>
+    <link href="https://zuiyu.me/2025/12/19/heic2jpg/"/>
+    <id>https://zuiyu.me/2025/12/19/heic2jpg/</id>
     <published>2025-12-19T15:29:04.000Z</published>
     <updated>2025-12-29T15:38:59.101Z</updated>
     
@@ -116,19 +116,19 @@
     
     
     
-    <category term="tools" scheme="http://example.com/categories/tools/"/>
+    <category term="tools" scheme="https://zuiyu.me/categories/tools/"/>
     
     
-    <category term="tools" scheme="http://example.com/tags/tools/"/>
+    <category term="tools" scheme="https://zuiyu.me/tags/tools/"/>
     
   </entry>
   
   <entry>
     <title>狀態表化簡程式實作</title>
-    <link href="http://example.com/2025/07/09/status-simple/"/>
-    <id>http://example.com/2025/07/09/status-simple/</id>
+    <link href="https://zuiyu.me/2025/07/09/status-simple/"/>
+    <id>https://zuiyu.me/2025/07/09/status-simple/</id>
     <published>2025-07-09T06:55:16.000Z</published>
-    <updated>2025-12-27T03:19:22.425Z</updated>
+    <updated>2026-07-11T10:27:33.427Z</updated>
     
     
       
@@ -141,14 +141,14 @@
     
     
     
-    <category term="dev" scheme="http://example.com/categories/dev/"/>
+    <category term="dev" scheme="https://zuiyu.me/categories/dev/"/>
     
     
-    <category term="C++" scheme="http://example.com/tags/C/"/>
+    <category term="C++" scheme="https://zuiyu.me/tags/C/"/>
     
-    <category term="數位邏輯" scheme="http://example.com/tags/%E6%95%B8%E4%BD%8D%E9%82%8F%E8%BC%AF/"/>
+    <category term="數位邏輯" scheme="https://zuiyu.me/tags/%E6%95%B8%E4%BD%8D%E9%82%8F%E8%BC%AF/"/>
     
-    <category term="程式專案" scheme="http://example.com/tags/%E7%A8%8B%E5%BC%8F%E5%B0%88%E6%A1%88/"/>
+    <category term="程式專案" scheme="https://zuiyu.me/tags/%E7%A8%8B%E5%BC%8F%E5%B0%88%E6%A1%88/"/>
     
   </entry>
   
